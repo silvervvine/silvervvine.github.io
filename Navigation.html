@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Навигация</title>
+</head>
+<body>
+    <h1>Навигация</h1>
+    
+    <ul>
+        <li><a href="#cat">Кот</a></li>
+        <li><a href="#dog">Собака</a></li>
+        <li><a href="#bee">Пчела Кликабельная</a></li>
+    </ul>
+    <a href="index.html">Вернуться в основное меню</a>
+
+    <h2 id="cat">Кот</h2>
+    <img src="https://i.pinimg.com/736x/d7/9d/fd/d79dfd5ab24af20bed7c63a905933ae7.jpg" class="thumb" width="100"
+            height="66"
+            onclick="openImageCentered('https://i.pinimg.com/736x/d7/9d/fd/d79dfd5ab24af20bed7c63a905933ae7.jpg',600,400)">
+        <p>Размер: 600×400.</p>
+    <p>Кот - домашнее животное, млекопитающее из семейства кошачьих.</p>
+    <p>Коты бывают разных пород и окрасов.</p>
+
+
+    
+    <h2 id="dog">Собака</h2>
+    <img src="images/Animals___Dogs_Retriever_in_grass_025331_25.jpg" alt="Собака">
+    <p>Собака - домашнее животное, одно из наиболее популярных животных-компаньонов.</p>
+    <p>Собаки известны своей преданностью хозяину.</p>
+    
+     <h2 id="bee">Пчела Кликабельная</h2>
+    <a href="https://ru.wikipedia.org/wiki/Пчела" target="_blank">
+        <img src="images/bffff0972f2cb2925ac08f37dc8c6b1d.jpg" alt="Пчела">
+    </a>
+
+    <p>Пчела - летающее насекомое, известное производством меда.</p>
+    <p>Пчелы играют важную роль в опылении растений.</p>
+    
+    <a href="#">Вернуться к началу</a>
+
+
+    <title>Контактная форма</title>
+</head>
+<body>
+    <h1>Контактная форма</h1>
+    
+    <form action="https://www.google.com/search" method="GET" target="_blank">
+        <input type="hidden" name="q" value="милые котики">
+        
+        <p>Фамилия:</p>
+        <input type="text" name="lastname">
+        
+        <p>Имя:</p>
+        <input type="text" name="firstname">
+        
+        <p>Группа:</p>
+        <input type="text" name="group">
+        
+        <p>Телефон:</p>
+        <input type="tel" name="phone">
+        
+        <p>Почта:</p>
+        <input type="email" name="email">
+        
+        <p>Дата:</p>
+        <input type="text" name="date" placeholder="ДД · ММ · ГГГГ">
+        
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+</body>
+</html>
+
