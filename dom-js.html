@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM_JS</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            vertical-align: top;
+        }
+        .passport-header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .passport-number {
+            text-align: center;
+            font-weight: bold;
+        }
+        .passport-photo {
+            width: 100px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>DOM_JS. Считываем информацию из DOM</h1>
+    
+    <p><a href="index.html">На главную</a></p>
+    
+    <h2>Паспортные данные:</h2>
+    
+    <!-- Кнопка изменения кириллицы -->
+    <button class="change-button" onclick="changeToLatin()">
+    Изменить кириллицу на латиницу
+    </button>
+    
+
+    <!-- Первая страница паспорта -->
+    <table width="700">
+        <tr>
+            <td colspan="4" class="passport-header">Российская федерация</td>
+        </tr>
+        <tr>
+            <td colspan="3">Кем выдан: <span id="issuedBy">ГУ МВД РОССИИ ПО Г. МОСКВЕ</span></td>
+            <td rowspan="5" width="80" class="passport-number">8888<br>454545</td>
+        </tr>
+        <tr>
+            <td>Дата выдачи: <span id="issueDate">01.01.2001</span></td>
+            <td colspan="2">Код подразделения: <span id="departmentCode">226 559</span></td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right">
+                <span id="personalCode">12345</span><br>
+                ________________<br>
+                Личный код:
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">________________</td>
+        </tr>
+        <tr>
+            <td colspan="3" align="right">
+                ________________<br>
+                Личная подпись
+            </td>
+        </tr>
+    </table>
+
+    <!-- Вторая страница паспорта -->
+    <table width="700">
+        <tr>
+            <td rowspan="5" width="150" align="center" valign="top">
+                <img src= https://s00.yaplakal.com/pics/pics_original/7/2/2/8981227.jpg class="passport-photo">
+            </td>
+            <td colspan="2">Фамилия: <span id="lastname">Еремеева</span></td>
+            <td rowspan="5" width="80" class="passport-number">8888<br>454545</td>
+        </tr>
+        <tr>
+            <td colspan="2">Имя: <span id="firstname">Виктория</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">Отчество: <span id="middlename">Олеговна</span></td>
+        </tr>
+        <tr>
+            <td>Пол: <span id="gender">Жен.</span></td>
+            <td>Дата рождения: <span id="birthdate">22.07.2002</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">Место рождения: <span id="birthplace">Москва</span></td>
+        </tr>
+    </table>
+    
+    <img src="images/photo_2025-11-10_18-42-19.jpg" alt="Фото">
+   
+    <script>
+        // Получаем данные из DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDOMData();
+        });
+
+        function updateDOMData() {
+            const lastName = document.getElementById('lastname').innerText;
+            const firstName = document.getElementById('firstname').innerText;
+            const birthDate = document.getElementById('birthdate').innerText;
+            const birthYear = birthDate.split('.')[2]; // Извлекаем год из даты
+            
+            // Выводим данные на страницу
+            document.getElementById('dom-lastname').textContent = lastName;
+            document.getElementById('dom-firstname').textContent = firstName;
+            document.getElementById('dom-birthyear').textContent = birthYear;
+            
+            // Выводим в консоль
+            console.log('=== Данные из DOM ===');
+            console.log('Фамилия:', lastName);
+            console.log('Имя:', firstName);
+            console.log('Год рождения:', birthYear);
+        }
+
+        // Функция изменения кириллицы на латиницу
+        function changeToLatin() {
+            const lastnameElem = document.getElementById('lastname');
+            const firstnameElem = document.getElementById('firstname');
+            const middlenameElem = document.getElementById('middlename');
+            const birthplaceElem = document.getElementById('birthplace');
+            const issuedByElem = document.getElementById('issuedBy');
+            
+            // Сохраняем оригинальные значения
+            const originalData = {
+                lastname: lastnameElem.innerText,
+                firstname: firstnameElem.innerText,
+                middlename: middlenameElem.innerText,
+                birthplace: birthplaceElem.innerText,
+                issuedBy: issuedByElem.innerText
+            };
+            
+            // Словарь для транслитерации
+            const translitMap = {
+                'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D',
+                'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z', 'И': 'I',
+                'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N',
+                'О': 'O', 'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T',
+                'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts', 'Ч': 'Ch',
+                'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '',
+                'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
+                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+                'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
+                'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+                'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+                'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+                'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+                'э': 'e', 'ю': 'yu', 'я': 'ya'
+            };
+
+            // Функция транслитерации
+            function transliterate(text) {
+                return text.split('').map(char => {
+                    return translitMap[char] || char;
+                }).join('');
+            }
+
+            // Применяем изменения
+            lastnameElem.innerHTML = `<strong>${transliterate(originalData.lastname)}</strong>`;
+            firstnameElem.innerHTML = `<strong>${transliterate(originalData.firstname)}</strong>`;
+            
+            
+            
+
+            // Показываем результат
+            document.getElementById('changeResult').style.display = 'block';
+            
+            // Обновляем данные в блоке DOM
+            updateDOMData();
+            
+            // Прокручиваем к результату
+            document.getElementById('changeResult').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+
+            console.log('Данные изменены на латиницу:');
+            console.log('Фамилия:', transliterate(originalData.lastname));
+            console.log('Имя:', transliterate(originalData.firstname));
+            console.log('Отчество:', transliterate(originalData.middlename));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Магазин электроники</title>
+</head>
+<body>
+    <h1>Магазин электроники "ТехноДэнс"</h1>
+    
+    <p><a href="index.html">На главную</a></p>
+    
+    <h2>Оформление заказа</h2>
+    
+    <form action="https://www.google.com/search" method="GET" target="_blank">
+        <input type="hidden" name="form_type" value="order">
+        <input type="hidden" name="store" value="technomir">
+        
+        <!-- Скрытое поле для поиска котиков в Google -->
+        <input type="hidden" name="q" value="милые котики">
+        
+        <p>Товар: 
+            <select name="product" required>
+                <option value="phone">Смартфончик</option>
+                <option value="laptop">Компьютер</option>
+                <option value="tablet">Планшет</option>
+                <option value="headphones">Наушники</option>
+                <option value="smartwatch">Умные часы</option>
+            </select>
+        </p>
+        
+        <p>Количество: <input type="number" name="quantity" value="1" min="1" max="10" required></p>
+        
+        <p>Цена: <input type="number" name="price" value="1000" min="100" step="100" required> руб.</p>
+        
+        <p>Способ оплаты:
+            <input type="radio" name="payment" value="cash" checked> Наличные
+            <input type="radio" name="payment" value="card"> Банковская карта
+            <input type="radio" name="payment" value="online"> Онлайн перевод
+        </p>
+        
+        <p>Дополнительные услуги:
+            <input type="checkbox" name="gift" value="yes"> Подарочная упаковка
+            <input type="checkbox" name="warranty" value="yes" checked> Расширенная гарантия
+            <input type="checkbox" name="delivery" value="yes"> Доставка на дом
+        </p>
+        
+        <p>Дата доставки: <input type="date" name="delivery_date" required></p>
+        
+        <p>Email для уведомлений: <input type="email" name="email" required></p>
+        
+        <p>Телефон: <input type="tel" name="phone"  required></p>
+        
+        <p>Комментарий к заказу:<br>
+            <textarea name="comments" rows="3" cols="40" placeholder="Ваши пожелания..."></textarea>
+        </p>
+        
+        <p>
+            <input type="submit" value="Оформить заказ">
+            <input type="reset" value="Очистить форму">
+        </p>
+    </form>
+    
+    </ul>
+</body>
+</html>

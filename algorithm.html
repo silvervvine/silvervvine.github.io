@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Решение алгоритмической задачи</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <nav id="main-nav">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        
+        
+        
+
+        <!-- Форма для ввода года -->
+        <section id="input-section">
+            <h2>Введите год для проверки:</h2>
+            <form id="yearForm">
+                <div class="form-group">
+                    <label for="yearInput">Год (от 1 до 9999):</label>
+                    <input type="number" id="yearInput" min="1" max="9999" value="2025" required>
+                </div>
+                
+                <button type="button" id="calculateBtn" class="action-button">
+                Определить результат
+                </button>
+            </form>
+        </section>
+
+        <!-- Результаты -->
+        <section id="result-section" style="display: none;">
+            <h2> Результат:</h2>
+            <div class="result-card">
+                <h3>Год: <span id="result-year"></span></h3>
+                <div id="leap-year-result" class="result-item">
+                    <!-- Сюда вставится результат про високосный год -->
+                </div>
+                <div id="century-result" class="result-item">
+                    <!-- Сюда вставится результат про век -->
+                </div>
+            </div>
+        </section>
+
+
+    <script>
+        // Функция для определения високосного года и века
+        function calculateYearInfo() {
+            const yearInput = document.getElementById('yearInput');
+            const year = parseInt(yearInput.value);
+            
+            // Проверка ввода
+            if (isNaN(year) || year < 1 || year > 9999) {
+                alert('Пожалуйста, введите корректный год (от 1 до 9999)');
+                return;
+            }
+            
+            // Определяем високосный ли год
+            let isLeap = false;
+            let leapExplanation = '';
+            
+            if (year % 400 === 0) {
+                isLeap = true;
+                
+            } else if (year % 100 === 0) {
+                isLeap = false;
+                
+            } else if (year % 4 === 0) {
+                isLeap = true;
+                
+            } else {
+                isLeap = false;
+                
+            }
+            
+            // Определяем век
+            const century = Math.ceil(year / 100);
+            
+            // Показываем результаты
+            document.getElementById('result-year').textContent = year;
+            
+            // Результат про високосный год
+            const leapYearElement = document.getElementById('leap-year-result');
+            if (isLeap) {
+                leapYearElement.innerHTML = `
+                    
+                        <strong>Високосный год</strong>
+                    </div>
+                    <p>${leapExplanation}</p>
+                `;
+            } else {
+                leapYearElement.innerHTML = `
+                    
+                        <strong>Не високосный год</strong>
+                    </div>
+                    <p>${leapExplanation}</p>
+                `;
+            }
+            
+            // Результат про век
+            document.getElementById('century-result').innerHTML = `
+                
+                    <strong>${century} век</strong>
+                </div>
+        
+            `;
+            
+            // Показываем секцию с результатами
+            document.getElementById('result-section').style.display = 'block';
+            
+            // Плавно прокручиваем к результатам
+            document.getElementById('result-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+        
+        // Обработчик кнопки
+        document.getElementById('calculateBtn').addEventListener('click', calculateYearInfo);
+        
+        // Обработчик нажатия Enter в поле ввода
+        document.getElementById('yearInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                calculateYearInfo();
+            }
+        });
+        
+        // Вычисляем при загрузке для примера
+        document.addEventListener('DOMContentLoaded', calculateYearInfo);
+    </script>
+    <script src="scripts/navigation.js"></script>
+</body>
+</html>
