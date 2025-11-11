@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>DOM_JS</title>
     <style>
+        /* Стили паспорта (ваши существующие) */
         table {
             border-collapse: collapse;
             margin: 20px 0;
@@ -27,21 +28,78 @@
             object-fit: cover;
             border: 1px solid #ccc;
         }
+        .change-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
         
+        /* Стили для навигации с подсветкой */
+        #main-nav {
+            background-color: #f8f9fa;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-link {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .nav-link:hover {
+            background-color: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .nav-link.active {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+            border-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <!-- Навигация с подсветкой -->
+    <nav id="main-nav">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Главная</a></li>
+                <li><a href="dom-js.html" class="nav-link">DOM & Паспорт</a></li>
+                <li><a href="algorithm.html" class="nav-link">Алгоритмы</a></li>
+                <li><a href="form-contacts.html" class="nav-link">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <h1>DOM_JS. Считываем информацию из DOM</h1>
-    
-    <p><a href="index.html">На главную</a></p>
     
     <h2>Паспортные данные:</h2>
     
     <!-- Кнопка изменения кириллицы -->
     <button class="change-button" onclick="changeToLatin()">
-    Изменить кириллицу на латиницу
+        Изменить кириллицу на латиницу
     </button>
-    
 
     <!-- Первая страница паспорта -->
     <table width="700">
@@ -78,7 +136,7 @@
     <table width="700">
         <tr>
             <td rowspan="5" width="150" align="center" valign="top">
-                <img src= https://s00.yaplakal.com/pics/pics_original/7/2/2/8981227.jpg class="passport-photo">
+                <img src="https://s00.yaplakal.com/pics/pics_original/7/2/2/8981227.jpg" class="passport-photo" alt="Фото в паспорте">
             </td>
             <td colspan="2">Фамилия: <span id="lastname">Еремеева</span></td>
             <td rowspan="5" width="80" class="passport-number">8888<br>454545</td>
@@ -98,50 +156,52 @@
         </tr>
     </table>
     
-    <img src="images/photo_2025-11-10_18-42-19.jpg" alt="Фото">
+    <!-- Дополнительное фото -->
+    <img src="images/photo_2025-11-10_18-42-19.jpg" alt="Дополнительное фото" style="max-width: 300px; margin: 20px 0;">
    
     <script>
-        // Получаем данные из DOM
+        // ===== ПОДСВЕТКА АКТИВНОЙ СТРАНИЦЫ =====
         document.addEventListener('DOMContentLoaded', function() {
+            // Определяем текущую страницу
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Подсвечиваем активную страницу
+            navLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                
+                // Для главной страницы
+                if (currentPage === '' && linkPage === 'index.html') {
+                    link.classList.add('active');
+                }
+                // Для других страниц
+                else if (linkPage === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Инициализируем данные DOM
             updateDOMData();
         });
 
+        // ===== ВАШ СУЩЕСТВУЮЩИЙ КОД =====
         function updateDOMData() {
             const lastName = document.getElementById('lastname').innerText;
             const firstName = document.getElementById('firstname').innerText;
             const birthDate = document.getElementById('birthdate').innerText;
-            const birthYear = birthDate.split('.')[2]; // Извлекаем год из даты
+            const birthYear = birthDate.split('.')[2];
             
-            // Выводим данные на страницу
-            document.getElementById('dom-lastname').textContent = lastName;
-            document.getElementById('dom-firstname').textContent = firstName;
-            document.getElementById('dom-birthyear').textContent = birthYear;
-            
-            // Выводим в консоль
             console.log('=== Данные из DOM ===');
             console.log('Фамилия:', lastName);
             console.log('Имя:', firstName);
             console.log('Год рождения:', birthYear);
         }
 
-        // Функция изменения кириллицы на латиницу
         function changeToLatin() {
             const lastnameElem = document.getElementById('lastname');
             const firstnameElem = document.getElementById('firstname');
             const middlenameElem = document.getElementById('middlename');
-            const birthplaceElem = document.getElementById('birthplace');
-            const issuedByElem = document.getElementById('issuedBy');
             
-            // Сохраняем оригинальные значения
-            const originalData = {
-                lastname: lastnameElem.innerText,
-                firstname: firstnameElem.innerText,
-                middlename: middlenameElem.innerText,
-                birthplace: birthplaceElem.innerText,
-                issuedBy: issuedByElem.innerText
-            };
-            
-            // Словарь для транслитерации
             const translitMap = {
                 'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D',
                 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z', 'И': 'I',
@@ -159,35 +219,20 @@
                 'э': 'e', 'ю': 'yu', 'я': 'ya'
             };
 
-            // Функция транслитерации
             function transliterate(text) {
                 return text.split('').map(char => {
                     return translitMap[char] || char;
                 }).join('');
             }
 
-            // Применяем изменения
-            lastnameElem.innerHTML = `<strong>${transliterate(originalData.lastname)}</strong>`;
-            firstnameElem.innerHTML = `<strong>${transliterate(originalData.firstname)}</strong>`;
-            
-            
-            
-
-            // Показываем результат
-            document.getElementById('changeResult').style.display = 'block';
-            
-            // Обновляем данные в блоке DOM
-            updateDOMData();
-            
-            // Прокручиваем к результату
-            document.getElementById('changeResult').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
+            lastnameElem.textContent = transliterate(lastnameElem.textContent);
+            firstnameElem.textContent = transliterate(firstnameElem.textContent);
+            middlenameElem.textContent = transliterate(middlenameElem.textContent);
 
             console.log('Данные изменены на латиницу:');
-            console.log('Фамилия:', transliterate(originalData.lastname));
-            console.log('Имя:', transliterate(originalData.firstname));
-            console.log('Отчество:', transliterate(originalData.middlename));
+            console.log('Фамилия:', lastnameElem.textContent);
+            console.log('Имя:', firstnameElem.textContent);
+            console.log('Отчество:', middlenameElem.textContent);
         }
     </script>
 </body>
